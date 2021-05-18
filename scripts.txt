@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Store]    Script Date: 17/05/2021 11:24:59 p. m. ******/
+/****** Object:  Database [Store]    Script Date: 18/05/2021 11:22:16 a. m. ******/
 CREATE DATABASE [Store]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -78,17 +78,17 @@ ALTER DATABASE [Store] SET QUERY_STORE = OFF
 GO
 USE [Store]
 GO
-/****** Object:  User [sa2021]    Script Date: 17/05/2021 11:24:59 p. m. ******/
+/****** Object:  User [sa2021]    Script Date: 18/05/2021 11:22:17 a. m. ******/
 CREATE USER [sa2021] WITHOUT LOGIN WITH DEFAULT_SCHEMA=[dbo]
 GO
-/****** Object:  User [sa1]    Script Date: 17/05/2021 11:24:59 p. m. ******/
+/****** Object:  User [sa1]    Script Date: 18/05/2021 11:22:17 a. m. ******/
 CREATE USER [sa1] FOR LOGIN [sa1] WITH DEFAULT_SCHEMA=[dbo]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [sa2021]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [sa1]
 GO
-/****** Object:  Table [dbo].[Categoria]    Script Date: 17/05/2021 11:24:59 p. m. ******/
+/****** Object:  Table [dbo].[Categoria]    Script Date: 18/05/2021 11:22:17 a. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -104,7 +104,24 @@ CREATE TABLE [dbo].[Categoria](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Producto_Categoria]    Script Date: 17/05/2021 11:24:59 p. m. ******/
+/****** Object:  Table [dbo].[Factura]    Script Date: 18/05/2021 11:22:17 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Factura](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Nit] [nvarchar](250) NOT NULL,
+	[Total] [float] NOT NULL,
+	[Fecha] [datetime] NOT NULL,
+	[Referencia] [nvarchar](250) NOT NULL,
+ CONSTRAINT [PK_Factura] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Producto_Categoria]    Script Date: 18/05/2021 11:22:17 a. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -121,7 +138,7 @@ CREATE TABLE [dbo].[Producto_Categoria](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Productos]    Script Date: 17/05/2021 11:24:59 p. m. ******/
+/****** Object:  Table [dbo].[Productos]    Script Date: 18/05/2021 11:22:17 a. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -141,7 +158,7 @@ CREATE TABLE [dbo].[Productos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Ventas]    Script Date: 17/05/2021 11:24:59 p. m. ******/
+/****** Object:  Table [dbo].[Ventas]    Script Date: 18/05/2021 11:22:17 a. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -153,6 +170,7 @@ CREATE TABLE [dbo].[Ventas](
 	[Valor] [float] NOT NULL,
 	[Estado] [int] NOT NULL,
 	[Fecha] [datetime] NOT NULL,
+	[FacturaId] [bigint] NOT NULL,
  CONSTRAINT [PK_Ventas] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
